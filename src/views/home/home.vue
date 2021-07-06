@@ -1,11 +1,14 @@
 <template>
     <div id="home">
         <nav-bar  class="home-nav"><div slot="center">购物街</div></nav-bar>
-        <home-swipper :banners="banners"/>
-        <Home-recommend-view :recommends="recommends"/>
-        <feature-view></feature-view>
-        <tab-control :titles='["流行","新款","精选"]' class="tab-control" @tabClick="tabClick"></tab-control>
-        <goods-list :goods="showGoods"></goods-list>
+        <scroll class="content">
+             <home-swipper :banners="banners"/>
+            <Home-recommend-view :recommends="recommends"/>
+            <feature-view></feature-view>
+            <tab-control :titles='["流行","新款","精选"]' class="tab-control" @tabClick="tabClick"></tab-control>
+            <goods-list :goods="showGoods"></goods-list>
+        </scroll>
+        
     </div>
 </template>
 
@@ -17,6 +20,8 @@ import FeatureView from './childComps/FeatureView'
 import NavBar from 'components/common/navbar/NavBar'
 import TabControl from 'components/content/tabControl/tabControl'
 import GoodsList from 'components/content/goods/GoodsList'
+
+import Scroll from 'components/common/scroll/Scroll'
 
 import {getHomeMultidata,getHomeGoods} from 'api/home'
 
@@ -30,6 +35,7 @@ export default {
         NavBar,
         TabControl,
         GoodsList,
+        Scroll,
     },
     data(){
         return {
@@ -105,5 +111,10 @@ export default {
 .tab-control{
     position:relative;
     z-index: 9;
+}
+.content{
+    height:calc(100%-93px);
+    overflow:hidden;
+    margin-top:44px;
 }
 </style>
