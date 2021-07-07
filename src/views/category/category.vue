@@ -116,7 +116,10 @@ export default {
     },
     mounted(){
         this.scroll=new BScroll(document.querySelector('.wrapper'),{
-            
+            probeType:3
+        })
+        this.scroll.on('scroll',(position)=>{
+            console.log(position)
         })
     }
 }
