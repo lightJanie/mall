@@ -1,6 +1,6 @@
 <template>
-    <div class="wrapper">分类
-        <ul class="content">
+    <div class="wrapper" ref="wrapper">分类
+        <div class="content">
             <li>列表</li>
             <li>列表</li>
             <li>列表</li>
@@ -101,7 +101,7 @@
             <li>列表</li>
             <li>列表</li>
             <li>列表</li>
-        </ul>
+        </div>
     </div>
 </template>
 
@@ -115,7 +115,7 @@ export default {
         }
     },
     mounted(){
-        this.scroll=new BScroll(document.querySelector('.wrapper'),{
+        this.scroll=new BScroll(this.$refs.wrapper,{
             probeType:3
         })
         this.scroll.on('scroll',(position)=>{
@@ -127,7 +127,7 @@ export default {
 
 <style scoped>
 .wrapper{
-    height: 150px;
+    height: 300px;
     background-color: red;
     overflow: hidden;
 }

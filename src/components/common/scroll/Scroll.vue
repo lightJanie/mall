@@ -90,6 +90,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.wrapper{
+    height:300px;
+    background-color: red;
+    overflow: hidden;
 
+}
 </style>

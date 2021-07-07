@@ -65,7 +65,7 @@ export default {
     },
     methods:{
         backClick(){
-            this.$refs.scroll.scrollTo(0,-20)
+            this.$refs.scroll.scrollTo(0,0)
         },
         tabClick(index){
             switch(index){
@@ -127,6 +127,6 @@ export default {
     top: 44px;
     bottom: 49px;
     left: 0;
-    right: 0; */
+    right: 0;*/
 }
 </style>
