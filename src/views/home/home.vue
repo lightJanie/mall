@@ -1068,7 +1068,7 @@ export default {
     },
     methods:{
         backClick(){
-            this.$refs.scroll.scroll.scrollTo(0,0)
+            this.$refs.scroll.scrollTo(0,0,500)
         },
         tabClick(index){
             switch(index){
