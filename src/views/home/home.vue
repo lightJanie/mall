@@ -31,7 +31,7 @@ import Scroll from 'components/common/scroll/Scroll'
 import BackTop from 'components/content/backTop/BackTop'
 
 import {getHomeMultidata,getHomeGoods} from 'api/home'
-
+import {debounce} from 'utils/utils'
 
 export default {
     name:"Home",
@@ -71,23 +71,13 @@ export default {
         
     },
     mounted(){
-        const refresh=this.debounce(this.$refs.scroll.refresh,500)
+        const refresh=debounce(this.$refs.scroll.refresh,500)
         this.$bus.$on('itemImageLoad',()=>{
             refresh()
             
         })
     },
     methods:{
-        // 防抖动
-        debounce(func,delay){
-            let timer=null
-            return function(...args){
-                if(timer){clearTimeout(timer)}
-                timer=setTimeout(()=>{
-                    func.apply(this,args)
-                },delay)
-            }
-        },
         backClick(){
             this.$refs.scroll.scrollTo(0,0,500)
         },
