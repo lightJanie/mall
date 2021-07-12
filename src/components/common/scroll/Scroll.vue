@@ -50,7 +50,6 @@ export default {
             this.scroll && this.scroll.refresh()
         }
     }
-    
 }
 </script>
 

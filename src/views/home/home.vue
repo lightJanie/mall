@@ -1,16 +1,21 @@
 <template>
     <div id="home">
         <nav-bar  class="home-nav"><div slot="center">购物街</div></nav-bar>
+        <tab-control :titles='["流行","新款","精选"]'  v-show="isTabFixed"
+                                                                                                    @tabClick="tabClick" 
+                                                                                                    ref="tabControl"></tab-control>
         <scroll class="content" 
                         ref='scroll' 
                         :probe-type='3' 
                         :pull-up-load='true'
                         @scroll="contentScroll"
                         @pullingUp="loadMore">
-             <home-swipper :banners="banners"/>
+             <home-swipper :banners="banners" @swiperImageLoad="swiperImageLoad" />
             <Home-recommend-view :recommends="recommends"/>
             <feature-view></feature-view>
-            <tab-control :titles='["流行","新款","精选"]' class="tab-control" @tabClick="tabClick"></tab-control>
+            <tab-control :titles='["流行","新款","精选"]' class="tab-control" 
+                                                                                                    @tabClick="tabClick" 
+                                                                                                    ref="tabControl"></tab-control>
             <goods-list :goods="showGoods"></goods-list>
         </scroll>
         <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
@@ -56,6 +61,8 @@ export default {
             },
             currentType:'pop',
             isShowBackTop:false,
+            tabOffsetTop:0,
+            isTabFixed:false,
         }
     },
     computed:{
@@ -71,13 +78,17 @@ export default {
         
     },
     mounted(){
+        // 图片加载完成的时间监听
         const refresh=debounce(this.$refs.scroll.refresh,500)
         this.$bus.$on('itemImageLoad',()=>{
             refresh()
-            
         })
+        
     },
     methods:{
+        swiperImageLoad(){
+            this.tabOffsetTop=this.$refs.tabControl.$el.offsetTop            
+        },
         backClick(){
             this.$refs.scroll.scrollTo(0,0,500)
         },
@@ -109,12 +120,14 @@ export default {
             })
         },
         contentScroll(position){
-            // console.log(position.y);
+            // 1.判断backTop是否显示
             if(Math.abs(position.y)>1000){
                 this.isShowBackTop=true
             }else{
                 this.isShowBackTop=false
             }
+            // 2.判断tabControl是否吸顶
+            this.isTabFixed=(-position.y)>this.tabOffsetTop
         },
         loadMore(){
             this.getHomeGoods(this.currentType)
@@ -135,11 +148,12 @@ export default {
 .home-nav{
     background-color:var(--color-tint);
     color:#fff;
-    position:fixed;
+    /* 页面原生滚动时，为了让导航栏不跟随滚动 */
+    /* position:fixed;
     left:0;
     right:0;
     top:0px;
-    z-index:9;
+    z-index:9; */
 }
 .tab-control{
     position:relative;
