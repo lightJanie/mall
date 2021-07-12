@@ -3,7 +3,7 @@
         <nav-bar  class="home-nav"><div slot="center">购物街</div></nav-bar>
         <tab-control :titles='["流行","新款","精选"]'  v-show="isTabFixed"
                                                                                                     @tabClick="tabClick" 
-                                                                                                    ref="tabControl"></tab-control>
+                                                                                                    ref="tabControl1"></tab-control>
         <scroll class="content" 
                         ref='scroll' 
                         :probe-type='3' 
@@ -15,7 +15,7 @@
             <feature-view></feature-view>
             <tab-control :titles='["流行","新款","精选"]' class="tab-control" 
                                                                                                     @tabClick="tabClick" 
-                                                                                                    ref="tabControl"></tab-control>
+                                                                                                    ref="tabControl2"></tab-control>
             <goods-list :goods="showGoods"></goods-list>
         </scroll>
         <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
@@ -87,7 +87,7 @@ export default {
     },
     methods:{
         swiperImageLoad(){
-            this.tabOffsetTop=this.$refs.tabControl.$el.offsetTop            
+            this.tabOffsetTop=this.$refs.tabControl2.$el.offsetTop            
         },
         backClick(){
             this.$refs.scroll.scrollTo(0,0,500)
@@ -104,6 +104,8 @@ export default {
                     this.currentType='sell'
                     break
             }
+            this.$refs.tabControl1.currentIndex=index
+            this.$refs.tabControl2.currentIndex=index
         },
         getHomeMultidata(){
             getHomeMultidata().then(res=>{
