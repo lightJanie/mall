@@ -70,12 +70,18 @@ export default {
             return this.goods[this.currentType].list
         }
     },
+    activated(){
+        this.$refs.scroll.scrollTo(0,this.saveY,0)
+        this.$refs.scroll.refresh()
+    },
+    deactivated(){
+        this.saveY=this.$refs.scroll.getScrollY()
+    },
     created(){
         this.getHomeMultidata()
         this.getHomeGoods('pop')
         this.getHomeGoods('new')
         this.getHomeGoods('sell')
-        
     },
     mounted(){
         // 图片加载完成的时间监听
