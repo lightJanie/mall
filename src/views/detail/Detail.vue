@@ -9,7 +9,7 @@
 import detailNavBar from './childComps/detailNavBar'
 import detailSwiper from './childComps/detailSwiper'
 
-import {getDetail} from 'api/detail'
+import {getDetail,Goods} from 'api/detail'
 
 export default {
     name:'Detail',
@@ -20,13 +20,17 @@ export default {
     data(){
         return {
             iid:null,
-            topImages:[]
+            topImages:[],
+            goods:null,
         }
     },
     created(){
         this.iid=this.$route.params.id
         getDetail(this.iid).then(res=>{
-            this.topImages=res.result.itemInfo.topImages
+            const data=res.result
+            this.topImages=data.itemInfo.topImages
+            this.goods = new Goods(data.itemInfo,data.columns,data.shopInfo.services)
+            
             
         })
     }
